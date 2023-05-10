@@ -7,7 +7,7 @@ data "aws_ami" "ubuntu" {
   }
 
   filter {
-    name = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
 
@@ -15,19 +15,27 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_spot_instance_request" "stable_diffusion" {
-  ami                  = data.aws_ami.ubuntu.id
-  instance_type        = var.EC2_INSTANCE_TYPE
-  key_name             = var.AWS_KEY_PAIR
-  spot_price           = var.EC2_INSTANCE_SPOT_PRICE
-  spot_type            = "one-time"
-  wait_for_fulfillment = true
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.EC2_INSTANCE_TYPE
+  key_name                    = var.AWS_KEY_PAIR
+  spot_price                  = var.EC2_INSTANCE_SPOT_PRICE
+  spot_type                   = "one-time"
+  wait_for_fulfillment        = true
+  associate_public_ip_address = true
+
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = 300
+    encrypted             = false
+    delete_on_termination = true
+  }
 
   vpc_security_group_ids = [
     aws_security_group.stable_diffusion.id
   ]
 
   tags = {
-    Name          = "stable-diffusion"
+    Name = "stable-diffusion"
   }
 
   user_data = <<EOF
@@ -47,7 +55,7 @@ resource "aws_ebs_volume" "stable_diffusion_models" {
   iops              = 3000
 
   tags = {
-    Name          = "stable-diffusion"
+    Name = "stable-diffusion"
   }
 }
 
