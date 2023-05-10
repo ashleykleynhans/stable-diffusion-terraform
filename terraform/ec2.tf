@@ -33,7 +33,7 @@ resource "aws_spot_instance_request" "stable_diffusion" {
   user_data = <<EOF
 #!/usr/bin/env bash
 apt update
-apt -y install git
+apt -y install git libtcmalloc-minimal4
 su - ubuntu -c "cd /home/ubuntu && git clone https://github.com/ashleykleynhans/stable-diffusion-terraform.git"
 su - ubuntu -c "/home/ubuntu/stable-diffusion-terraform/provision/setup.sh"
 EOF
