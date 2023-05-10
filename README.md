@@ -24,7 +24,7 @@ pip3 install -r requirements.txt
 Edit the `config.yml` file and replace `YOUR_ACCESS_KEY_ID`
 and `YOUR_SECRET_ACCESS_KEY` with your actual AWS credentials.
 
-### Run the script
+### Run the script to calculate the spot price
 
 ```bash
 python3 get_spot_price.py -r eu-west-1 -i g4dn.xlarge
@@ -43,7 +43,7 @@ This will return the spot price, for example `0.24192`.
 brew install terraform
 ```
 
-### Initialise Terraofrm
+### Initialise Terraform
 
 ```bash
 terraform init
