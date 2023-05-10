@@ -2,10 +2,9 @@
 
 ## Clone the repo
 
-
 ```bash
-# FIXME
-git clone 
+git clone https://github.com/ashleykleynhans/stable-diffusion-terraform.git
+cd  stable-diffusion-terraform
 ```
 
 ## Calculate the spot price for the EC2 GPU instance
