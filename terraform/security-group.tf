@@ -4,13 +4,24 @@ resource "aws_security_group" "stable_diffusion" {
   vpc_id      = var.VPC_ID
 
   ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
+
+    cidr_blocks = [
+      "${var.MY_IP_ADDRESS}/32"
+    ]
+  }
+
+  ingress {
     description = "Stable Diffusion"
     from_port   = 7860
     to_port     = 7860
     protocol    = "TCP"
 
     cidr_blocks = [
-      "0.0.0.0/0"
+      "${var.MY_IP_ADDRESS}/32"
     ]
   }
 

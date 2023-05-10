@@ -18,5 +18,18 @@ variable "EC2_INSTANCE_SPOT_PRICE" {
 }
 
 variable "VPC_ID" {
-  default = ""
+  default = "vpc-xxxxxxxxxxxxxxxx"
+}
+
+variable "AVAILABILITY_ZONE" {
+  default = "us-east-2a"
+}
+
+# The subnet ID must be in the same availability zone as above
+variable "SUBNET_ID" {
+  default = "subnet-xxxxxxxxxxxxxxxxx"
+}
+
+variable "MY_IP_ADDRESS" {
+  default = "192.168.1.1"
 }

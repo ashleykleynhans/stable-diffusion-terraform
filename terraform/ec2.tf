@@ -19,6 +19,7 @@ resource "aws_spot_instance_request" "stable_diffusion" {
   instance_type               = var.EC2_INSTANCE_TYPE
   key_name                    = var.AWS_KEY_PAIR
   spot_price                  = var.EC2_INSTANCE_SPOT_PRICE
+  subnet_id                   = var.SUBNET_ID
   spot_type                   = "one-time"
   wait_for_fulfillment        = true
   associate_public_ip_address = true
@@ -48,7 +49,7 @@ EOF
 }
 
 resource "aws_ebs_volume" "stable_diffusion_models" {
-  availability_zone = "us-west-1a"
+  availability_zone = var.AVAILABILITY_ZONE
   size              = 60
   type              = "io2"
   encrypted         = false

@@ -51,14 +51,22 @@ terraform init
 
 ### Update the Terraform configuration
 
-Edit `terraform/vars.tf`, and update the following variables:
+Get your IP address:
+
+```bash
+curl https://icanhazip.com
+```
+
+Then edit `terraform/vars.tf`, and update the following variables:
 
 * AWS_REGION
 * AWS_KEY_PAIR
 * EC2_INSTANCE_TYPE
 * EC2_INSTANCE_SPOT_PRICE
 * VPC_ID
-
+* AVAILABILITY_ZONE
+* SUBNET_ID
+* MY_IP_ADDRESS
 
 ### Check what AWS resources are going to be created
 
