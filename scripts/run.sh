@@ -8,3 +8,5 @@ nohup python launch.py \
   --xformers \
   --api \
   --ckpt-dir /media/models/ckpt > /home/ubuntu/log.txt&
+cd
+tail -f log.txt

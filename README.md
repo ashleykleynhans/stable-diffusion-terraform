@@ -1,5 +1,13 @@
 # Create an AWS EC2 GPU Spot Instance to Run Stable Diffusion WebUI and DreamBooth using Terraform
 
+## Overview
+
+If you want to use Stable Diffusion on its own, a `g4dn.xlarge`
+EC2 instance type with 16GB of memory should suffice.  However,
+if you intend on using Dreambooth for training, I've found that
+16GB of memory is insufficient, and that a `g4dn.2xlarge`
+instance with 32GB of memory is required.
+
 ## Clone the repo
 
 ```bash
@@ -27,13 +35,13 @@ and `YOUR_SECRET_ACCESS_KEY` with your actual AWS credentials.
 ### Run the script to calculate the spot price
 
 ```bash
-python3 get_spot_price.py -r eu-west-1 -i g4dn.xlarge
+python3 get_spot_price.py -r eu-west-1 -i g4dn.2xlarge
 ```
 
-Where `eu-west-1` is the region, and `g4dn.xlarge` is the EC2
+Where `eu-west-1` is the region, and `g4dn.2xlarge` is the EC2
 instance type.
 
-This will return the spot price, for example `0.24192`.
+This will return the spot price, for example `0.37464`.
 
 ## Create your Stable Diffusion EC2 instance
 
