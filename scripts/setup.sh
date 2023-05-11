@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Install dependencies"
-sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip
+sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate
 git lfs install
 
 echo "Installing Github host keys"
@@ -51,6 +51,7 @@ echo "Check GPU"
 lspci | grep -i nvidia
 nvidia-smi
 
+echo "Installing Python modules for the WebUI and Dreambooth"
 cd /home/ubuntu/stable-diffusion-webui
 python3 -m venv venv
 source venv/bin/activate
@@ -61,6 +62,17 @@ cd extensions/sd_dreambooth_extension/
 pip3 install -r requirements.txt
 pip install --force-reinstall torch torchaudio torchvision --index-url https://download.pytorch.org/whl/cu118
 pip install --force-reinstall --no-deps --pre xformers
+
+echo "Installing bitsandbytes"
+rm -rf /home/ubuntu/stable-diffusion-webui/venv/lib/python3.10/site-packages/bitsandbytes
+cd /home/ubuntu
+git clone git@github.com:TimDettmers/bitsandbytes.git
+cd bitsandbytes
+cp -R /usr/local/cuda-12.1/targets/x86_64-linux/include/* /home/ubuntu/bitsandbytes/include
+sudo ln -s /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.12 /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.11
+export PATH="/usr/local/cuda-12.1/bin:/usr/local/cuda-12.1/nvvm/bin:$PATH"
+LD_LIBRARY_PATH=/usr/local/cuda-12.1/targets/x86_64-linux/lib CUDA_VERSION=121 make cuda12x
+python setup.py install
 
 # Reboot for the Nvidia GPU to be used
 sudo reboot
