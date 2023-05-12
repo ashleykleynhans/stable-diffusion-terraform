@@ -41,13 +41,13 @@ and `YOUR_SECRET_ACCESS_KEY` with your actual AWS credentials.
 ### Run the script to calculate the spot price
 
 ```bash
-python3 get_spot_price.py -r eu-west-1 -i g4dn.2xlarge
+python3 get_spot_price.py -r eu-west-1 -i g4dn.xlarge
 ```
 
-Where `eu-west-1` is the region, and `g4dn.2xlarge` is the EC2
+Where `eu-west-1` is the region, and `g4dn.xlarge` is the EC2
 instance type.
 
-This will return the spot price, for example `0.37464`.
+This will return the spot price, for example `0.24192`.
 
 ## Create your Stable Diffusion EC2 instance
 
