@@ -17,12 +17,12 @@ variable "EC2_INSTANCE_SPOT_PRICE" {
   default = "0.24192"
 }
 
-variable "VPC_ID" {
-  default = "vpc-xxxxxxxxxxxxxxxx"
+variable "EC2_INSTANCE_DISK_SIZE" {
+  default = 100
 }
 
-variable "AVAILABILITY_ZONE" {
-  default = "us-east-2a"
+variable "VPC_ID" {
+  default = "vpc-xxxxxxxxxxxxxxxx"
 }
 
 # The subnet ID must be in the same availability zone as above

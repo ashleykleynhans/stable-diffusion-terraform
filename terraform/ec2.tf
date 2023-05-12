@@ -26,7 +26,7 @@ resource "aws_spot_instance_request" "stable_diffusion" {
 
   root_block_device {
     volume_type           = "gp2"
-    volume_size           = 100
+    volume_size           = var.EC2_INSTANCE_DISK_SIZE
     encrypted             = false
     delete_on_termination = true
   }

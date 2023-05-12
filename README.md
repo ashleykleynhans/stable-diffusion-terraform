@@ -2,11 +2,17 @@
 
 ## Overview
 
-If you want to use Stable Diffusion on its own, a `g4dn.xlarge`
-EC2 instance type with 16GB of memory should suffice.  However,
-if you intend on using Dreambooth for training, I've found that
-16GB of memory is insufficient, and that a `g4dn.2xlarge`
-instance with 32GB of memory is required.
+Install the [Stable Diffusion WebUI by AUTOMATIC1111](
+https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+and [Dreambooth Extension](
+https://github.com/d8ahazard/sd_dreambooth_extension)
+on an AWS EC2 GPU spot instance for the fraction of the
+cost of an on-demand instance.
+
+A Python script is provided to assist you with determining
+your bid prince for the spot EC2 instance, and [Terraform](
+https://www.terraform.io/) code is provided to assist you
+with provisioning the EC2 instance in AWS.
 
 ## Clone the repo
 
@@ -89,10 +95,23 @@ Then edit `terraform/vars.tf`, and update the following variables:
 * AWS_KEY_PAIR
 * EC2_INSTANCE_TYPE
 * EC2_INSTANCE_SPOT_PRICE
+* EC2_INSTANCE_DISK_SIZE
 * VPC_ID
-* AVAILABILITY_ZONE
 * SUBNET_ID
 * MY_IP_ADDRESS
+
+The default disk size is 100GB, but if you plan on experimenting
+with multiple models and doing training, I recommend increasing
+it to around 300GB, depending on your requirements.
+
+### Create a terraform.tfvars file containing your AWS credentials
+
+Create a `terraform.tf` file with the following content:
+
+```
+AWS_ACCESS_KEY = "INSERT_YOUR_ACCESS_KEY"
+AWS_SECRET_KEY = "INSERT_YOUR_SECRET_KEY"
+```
 
 ### Check what AWS resources are going to be created
 
@@ -106,7 +125,56 @@ terraform plan
 terraform apply
 ```
 
+This will create your EC2 instance, and will output the
+private IP and the public IP.
+
+Take note of the public IP and use it to SSH to the
+server using the username `ubuntu` and the private
+key that you have specified in `vars.tf`.
+
+### Run Stable Diffusion
+
+Once the AWS resources are created by Terraform,
+`cloud-init` will take quite some time to install all the
+necessary dependencies (`scripts/setup.sh`), and will
+reboot the instance in order for the CUDA driver to
+take effect once its installed.
+
+You can check the progress by establishing an SSH
+connection to the server and running the following
+command:
+
+```bash
+tail -f /var/log/cloud-init-output.log
+```
+
+You should see something like this once everything
+is installed:
+
+```
+Cloud-init v. 23.1.2-0ubuntu0~22.04.1 finished at Fri, 12 May 2023 14:54:27 +0000. Datasource DataSourceEc2Local.  Up 10.65 seconds
+```
+
+Once the server is ready, you can start Stable Diffusion
+as follows:
+
+```bash
+/home/ubuntu/stable-diffusion-terraform/scripts/run.sh
+```
+
+This will automatically start tailing the logs, which
+is especially useful if you are going to be doing training
+using the Dreambooth extension.
+
 ## Destroy the Stable Diffusion AWS resources
+
+Once you are done using Stable Diffusion, training
+your model, etc, you should destroy the AWS resources
+so that you are not charged for them.
+
+If you trained any models, be sure to copy them
+off the server before destroying the resources,
+otherwise they will be lost forever.
 
 ```bash
 terraform destroy
