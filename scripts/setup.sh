@@ -10,7 +10,7 @@ curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/gith
 
 echo "Cloning AUTOMATIC1111 Stable Diffusion WebUI repo"
 cd /home/ubuntu
-git clone git@github.com:AUTOMATIC1111/stable-diffusion-webui.git
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 TAG="1.1.1"
 cd /home/ubuntu/stable-diffusion-webui
 git pull
@@ -22,11 +22,11 @@ wget https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pru
 
 echo "Installing ControlNet extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
-git clone git@github.com:Mikubill/sd-webui-controlnet.git
+git clone https://github.com/Mikubill/sd-webui-controlnet.git
 
 echo "Installing Dreambooth extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
-git clone git@github.com:d8ahazard/sd_dreambooth_extension.git
+git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 cd sd_dreambooth_extension
 BRANCH="dev"
 git checkout ${BRANCH}
