@@ -26,7 +26,7 @@ resource "aws_spot_instance_request" "stable_diffusion" {
 
   root_block_device {
     volume_type           = "gp2"
-    volume_size           = 300
+    volume_size           = 100
     encrypted             = false
     delete_on_termination = true
   }
@@ -44,22 +44,4 @@ resource "aws_spot_instance_request" "stable_diffusion" {
 su - ubuntu -c "cd /home/ubuntu && git clone https://github.com/ashleykleynhans/stable-diffusion-terraform.git"
 su - ubuntu -c "/home/ubuntu/stable-diffusion-terraform/scripts/setup.sh"
 EOF
-}
-
-resource "aws_ebs_volume" "stable_diffusion_models" {
-  availability_zone = var.AVAILABILITY_ZONE
-  size              = 60
-  type              = "io2"
-  encrypted         = false
-  iops              = 3000
-
-  tags = {
-    Name = "stable-diffusion"
-  }
-}
-
-resource "aws_volume_attachment" "stable_diffusion_models" {
-  device_name = "/dev/sdf"
-  instance_id = aws_spot_instance_request.stable_diffusion.spot_instance_id
-  volume_id   = aws_ebs_volume.stable_diffusion_models.id
 }

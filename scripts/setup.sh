@@ -7,20 +7,6 @@ echo "Installing Github host keys"
 ssh-keygen -R github.com
 curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/github.com /' >> ~/.ssh/known_hosts
 
-echo "Mounting io2 disk for models"
-sudo mkfs -t ext4 /dev/nvme2n1
-sudo mkdir -p /media/models
-sudo mount -t ext4 /dev/nvme2n1 /media/models
-sudo chown ubuntu:ubuntu /media/models
-sudo mkdir -p /media/models/ckpt
-sudo chown ubuntu:ubuntu /media/models/ckpt
-
-echo "Download some models"
-cd /media/models/ckpt
-wget https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned.ckpt
-wget https://huggingface.co/prompthero/openjourney/resolve/main/mdjrny-v4.ckpt
-wget -O protogenX34Photorealism_1.safetensors https://civitai.com/api/download/models/4048
-
 echo "Cloning AUTOMATIC1111 Stable Diffusion WebUI repo"
 cd /home/ubuntu
 git clone git@github.com:AUTOMATIC1111/stable-diffusion-webui.git
@@ -28,6 +14,10 @@ COMMIT="889b851a5260ce869a3286ad15d17d1bbb1da0a7"
 cd /home/ubuntu/stable-diffusion-webui
 git pull
 git checkout ${COMMIT}
+
+echo "Download Stable Diffusion model"
+cd /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion
+wget https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned.ckpt
 
 echo "Installing ControlNet extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
@@ -63,7 +53,7 @@ pip3 install -r requirements.txt
 pip install --force-reinstall torch torchaudio torchvision --index-url https://download.pytorch.org/whl/cu118
 pip install --force-reinstall --no-deps --pre xformers
 
-echo "Installing bitsandbytes"
+echo "Compiling and installing bitsandbytes for CUDA 12.1"
 rm -rf /home/ubuntu/stable-diffusion-webui/venv/lib/python3.10/site-packages/bitsandbytes
 cd /home/ubuntu
 git clone git@github.com:TimDettmers/bitsandbytes.git
