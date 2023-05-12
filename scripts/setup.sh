@@ -57,7 +57,7 @@ pip install --force-reinstall --no-deps --pre xformers
 echo "Compiling and installing bitsandbytes for CUDA 12.1"
 rm -rf /home/ubuntu/stable-diffusion-webui/venv/lib/python3.10/site-packages/bitsandbytes
 cd /home/ubuntu
-git clone git@github.com:TimDettmers/bitsandbytes.git
+git clone https://github.com/TimDettmers/bitsandbytes.git
 cd bitsandbytes
 cp -R /usr/local/cuda-12.1/targets/x86_64-linux/include/* /home/ubuntu/bitsandbytes/include
 sudo ln -s /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.12 /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.11
