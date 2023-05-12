@@ -135,6 +135,12 @@ Take note of the public IP and use it to SSH to the
 server using the username `ubuntu` and the private
 key that you have specified in `vars.tf`.
 
+__NOTE__: It takes approximately 20 minutes to install all
+the dependencies, and then the server will be rebooted
+so that the Nvidia GPU driver can be activated.  Once
+all the dependencies are installed, and the server is
+rebooted, you can proceed with running Stable Diffusion.
+
 ### Run Stable Diffusion
 
 Once the AWS resources are created by Terraform,
