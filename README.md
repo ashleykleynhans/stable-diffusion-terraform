@@ -117,15 +117,3 @@ terraform destroy
 ### GPU OOM issues
 
 See the the [Dreambooth extension wiki](https://github.com/d8ahazard/sd_dreambooth_extension/wiki/Troubleshooting#OOM).
-
-I had to uncheck `Use EMA` since the wiki mentions
-that it is known to use more GPU VRAM.
-
-## TODO
-
-1. Figure out why the data on the EBS volume is lost
-   when the instance is rebooted.
-2. Is the EBS volume for models even necessary?
-3. Try to get the latest versions of the WebUI and
-   Dreambooth extension working without having to
-   downgrade them.

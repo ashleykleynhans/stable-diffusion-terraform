@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 echo "Install dependencies"
-sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate
+sudo apt update
+sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate libcairo2-dev
 git lfs install
 
 echo "Installing Github host keys"
@@ -10,10 +11,10 @@ curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/gith
 echo "Cloning AUTOMATIC1111 Stable Diffusion WebUI repo"
 cd /home/ubuntu
 git clone git@github.com:AUTOMATIC1111/stable-diffusion-webui.git
-COMMIT="889b851a5260ce869a3286ad15d17d1bbb1da0a7"
+TAG="1.1.1"
 cd /home/ubuntu/stable-diffusion-webui
 git pull
-git checkout ${COMMIT}
+git checkout ${TAG}
 
 echo "Download Stable Diffusion model"
 cd /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion
@@ -27,8 +28,8 @@ echo "Installing Dreambooth extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
 git clone git@github.com:d8ahazard/sd_dreambooth_extension.git
 cd sd_dreambooth_extension
-COMMIT="65d5a78abe8a132d40c88360d77670a6d9b7294e"
-git checkout ${COMMIT}
+BRANCH="dev"
+git checkout ${BRANCH}
 
 echo "Install CUDA"
 cd /home/ubuntu
@@ -63,6 +64,10 @@ sudo ln -s /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.12 /usr/
 export PATH="/usr/local/cuda-12.1/bin:/usr/local/cuda-12.1/nvvm/bin:$PATH"
 LD_LIBRARY_PATH=/usr/local/cuda-12.1/targets/x86_64-linux/lib CUDA_VERSION=121 make cuda12x
 python setup.py install
+
+echo "Verifying bitsandbytes module installation"
+export LD_LIBRARY_PATH=/usr/local/cuda-12.1/targets/x86_64-linux/lib
+python -m bitsandbytes
 
 # Reboot for the Nvidia GPU to be used
 sudo reboot
