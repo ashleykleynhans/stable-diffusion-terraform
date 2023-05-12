@@ -17,6 +17,15 @@ with provisioning the EC2 instance in AWS.
 It is recommended to use a GPU instance that has at
 least 16GB of VRAM.
 
+The [g4dn instance types](
+https://aws.amazon.com/ec2/instance-types/g4/) with
+16G of GPU VRAM are available in many regions,
+but unfortunately the [g5 instance types](
+https://aws.amazon.com/ec2/instance-types/g5/)
+with 24GB of GPU VRAM and high performant local
+NVMe SSD storage are only available within the
+`us-east-1` (North Virginia) region.
+
 ## Clone the repo
 
 ```bash
