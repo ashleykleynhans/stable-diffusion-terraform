@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+DREAMBOOTH_COMMIT="32b28b67ccf91fd62394990738c8205455579a20"
+
 echo "Install dependencies"
 sudo apt update
 sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate libcairo2-dev
@@ -11,10 +14,9 @@ curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/gith
 echo "Cloning AUTOMATIC1111 Stable Diffusion WebUI repo"
 cd /home/ubuntu
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-TAG="1.1.1"
 cd /home/ubuntu/stable-diffusion-webui
-git pull
-git checkout ${TAG}
+echo "Checking out AUTOMATIC1111 1.1.1 release"
+git checkout 1.1.1
 
 echo "Download Stable Diffusion model"
 cd /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion
@@ -28,8 +30,9 @@ echo "Installing Dreambooth extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
 git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 cd sd_dreambooth_extension
-BRANCH="dev"
-git checkout ${BRANCH}
+echo "Checking out dev branch"
+git checkout dev
+echo "Checking out Dreambooth commit: ${DREAMBOOTH_COMMIT}"
 
 echo "Install CUDA"
 cd /home/ubuntu
