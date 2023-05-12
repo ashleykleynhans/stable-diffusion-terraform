@@ -1,18 +1,21 @@
-# Create an AWS EC2 GPU Spot Instance to Run Stable Diffusion WebUI and DreamBooth using Terraform
+# Create an AWS EC2 GPU Spot Instance to Run Stable Diffusion WebUI and DreamBooth on Ubuntu 22.04 LTS using Terraform
 
 ## Overview
 
-Install the [Stable Diffusion WebUI by AUTOMATIC1111](
+Install the Stable Diffusion [WebUI by AUTOMATIC1111](
 https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 and [Dreambooth Extension](
 https://github.com/d8ahazard/sd_dreambooth_extension)
-on an AWS EC2 GPU spot instance for the fraction of the
-cost of an on-demand instance.
+on Ubuntu 22.04 LTS Linux using an AWS EC2 GPU spot
+instance for the fraction of the cost of an on-demand instance.
 
 A Python script is provided to assist you with determining
 your bid prince for the spot EC2 instance, and [Terraform](
 https://www.terraform.io/) code is provided to assist you
 with provisioning the EC2 instance in AWS.
+
+It is recommended to use a GPU instance that has at
+least 16GB of VRAM.
 
 ## Clone the repo
 
