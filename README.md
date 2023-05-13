@@ -184,6 +184,20 @@ This will automatically start tailing the logs, which
 is especially useful if you are going to be doing training
 using the Dreambooth extension.
 
+## Access Stable Diffusion WebUI
+
+Once the Stable Diffusion WebUI is running, you can
+access it in your web browser on your IP (that you provided
+in `vars.tf`) on port 7860, for example:
+
+```
+http://127.0.0.1:7860
+```
+
+Obviously replace `127.0.0.1` with the IP that was
+returned when you ran the curl command to
+`https://icanhazip` above.
+
 ## Destroy the Stable Diffusion AWS resources
 
 Once you are done using Stable Diffusion, training
