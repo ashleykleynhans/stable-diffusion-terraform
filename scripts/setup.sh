@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+STABLE_DIFFUSION_WEBUI_VERSION="v1.2.0"
 DREAMBOOTH_COMMIT="32b28b67ccf91fd62394990738c8205455579a20"
 
 echo "Install dependencies"
@@ -11,12 +12,12 @@ echo "Installing Github host keys"
 ssh-keygen -R github.com
 curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/github.com /' >> ~/.ssh/known_hosts
 
-echo "Cloning AUTOMATIC1111 Stable Diffusion WebUI repo"
+echo "Cloning Stable Diffusion WebUI repo"
 cd /home/ubuntu
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd /home/ubuntu/stable-diffusion-webui
-echo "Checking out AUTOMATIC1111 1.1.1 release"
-git checkout 1.1.1
+echo "Checking out Stable Diffusion WebUI version: ${STABLE_DIFFUSION_WEBUI_VERSION}"
+git checkout ${STABLE_DIFFUSION_WEBUI_VERSION}
 
 echo "Download Stable Diffusion model"
 cd /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion
