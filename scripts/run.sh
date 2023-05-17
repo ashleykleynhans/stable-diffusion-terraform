@@ -8,6 +8,7 @@ nohup python launch.py \
   --listen \
   --enable-insecure-extension-access \
   --xformers \
-  --api > /home/ubuntu/log.txt&
+  --api \
+  --ckpt-dir /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion > /home/ubuntu/log.txt&
 cd
 tail -f log.txt
