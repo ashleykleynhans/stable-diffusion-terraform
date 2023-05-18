@@ -5,7 +5,7 @@ DREAMBOOTH_COMMIT="32b28b67ccf91fd62394990738c8205455579a20"
 
 echo "Install dependencies"
 sudo apt update
-sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate libcairo2-dev
+sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate libcairo2-dev python3-dev
 git lfs install
 
 echo "Installing Github host keys"
