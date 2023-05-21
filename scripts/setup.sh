@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 STABLE_DIFFUSION_WEBUI_VERSION="v1.2.1"
-DREAMBOOTH_COMMIT="32b28b67ccf91fd62394990738c8205455579a20"
+DREAMBOOTH_COMMIT="3324b6ab7fa661cf7d6b5ef186227dc5e8ad1878"
 
 echo "Install dependencies"
 sudo apt update
-sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs unzip plocate libcairo2-dev python3-dev
+sudo apt -y install jq python3.10-venv libtcmalloc-minimal4 git git-lfs zip unzip plocate libcairo2-dev python3-dev
 git lfs install
 
 echo "Installing Github host keys"
@@ -22,6 +22,10 @@ git checkout ${STABLE_DIFFUSION_WEBUI_VERSION}
 echo "Download Stable Diffusion model"
 cd /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion
 wget https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned.ckpt
+
+echo "Download Stable Diffusion VAE"
+cd /home/ubuntu/stable-diffusion-webui/models/VAE
+wget https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.ckpt
 
 echo "Installing ControlNet extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
@@ -56,8 +60,9 @@ pip3 install -r requirements.txt
 pip3 install -r requirements_versions.txt
 cd extensions/sd_dreambooth_extension/
 pip3 install -r requirements.txt
-pip install --force-reinstall torch torchaudio torchvision --index-url https://download.pytorch.org/whl/cu118
-pip install --force-reinstall --no-deps --pre xformers
+pip3 install torch==1.13.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+pip3 uninstall xformers
+pip3 install https://huggingface.co/MonsterMMORPG/SECourses/resolve/main/xformers-0.0.19-cp310-cp310-manylinux2014_x86_64.whl
 
 echo "Compiling and installing bitsandbytes for CUDA 12.1"
 rm -rf /home/ubuntu/stable-diffusion-webui/venv/lib/python3.10/site-packages/bitsandbytes
