@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 STABLE_DIFFUSION_WEBUI_VERSION="v1.2.1"
-DREAMBOOTH_COMMIT="3324b6ab7fa661cf7d6b5ef186227dc5e8ad1878"
+DREAMBOOTH_TAG="1.0.14"
 
 echo "Install dependencies"
 sudo apt update
@@ -37,7 +37,7 @@ git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 cd sd_dreambooth_extension
 echo "Checking out dev branch"
 git checkout dev
-echo "Checking out Dreambooth commit: ${DREAMBOOTH_COMMIT}"
+echo "Checking out Dreambooth commit: ${DREAMBOOTH_TAG}"
 
 echo "Install CUDA"
 cd /home/ubuntu
