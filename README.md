@@ -15,7 +15,9 @@ https://www.terraform.io/) code is provided to assist you
 with provisioning the EC2 instance in AWS.
 
 It is recommended to use a GPU instance that has at
-least 16GB of VRAM.
+least 16GB of GPU VRAM to run the standard Stable Diffusion
+Web UI. You will need at least 32GB of system memory and
+at least 20GB of GPU VRAM if you intend on doing training.
 
 The [g4dn instance types](
 https://aws.amazon.com/ec2/instance-types/g4/) with
@@ -24,7 +26,18 @@ but unfortunately the [g5 instance types](
 https://aws.amazon.com/ec2/instance-types/g5/)
 with 24GB of GPU VRAM and high performant local
 NVMe SSD storage are only available within the
-`us-east-1` (North Virginia) region.
+following regions:
+
+| Region       | Name           |
+|--------------|----------------|
+| us-east-1    | North Virginia |
+| us-west-2    | North Virginia |
+| ca-central-1 | Canada         |
+| eu-central-1 | Frankfurt      |
+| eu-west-1    | Ireland        |
+| eu-west-2    | London         |
+| eu-north-1   | Stockholm      |
+
 
 ## Clone the repo
 
