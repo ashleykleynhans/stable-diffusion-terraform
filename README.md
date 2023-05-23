@@ -31,7 +31,7 @@ following regions:
 | Region       | Name           |
 |--------------|----------------|
 | us-east-1    | North Virginia |
-| us-west-2    | North Virginia |
+| us-west-2    | Oregon         |
 | ca-central-1 | Canada         |
 | eu-central-1 | Frankfurt      |
 | eu-west-1    | Ireland        |
