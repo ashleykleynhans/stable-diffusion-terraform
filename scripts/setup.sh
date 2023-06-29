@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-STABLE_DIFFUSION_WEBUI_VERSION="v1.2.1"
+STABLE_DIFFUSION_WEBUI_VERSION="v1.4.0"
 DREAMBOOTH_TAG="1.0.14"
 
 echo "Install dependencies"
@@ -35,16 +35,15 @@ echo "Installing Dreambooth extension"
 cd /home/ubuntu/stable-diffusion-webui/extensions
 git clone https://github.com/d8ahazard/sd_dreambooth_extension.git
 cd sd_dreambooth_extension
-echo "Checking out dev branch"
-git checkout dev
 echo "Checking out Dreambooth commit: ${DREAMBOOTH_TAG}"
+git checkout ${DREAMBOOTH_TAG}
 
 echo "Install CUDA"
 cd /home/ubuntu
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt update
-sudo apt -y install cuda
+sudo apt -y install cuda=11.8.0-1
 rm cuda-keyring_1.1-1_all.deb
 
 echo "Check GPU"
@@ -60,24 +59,8 @@ pip3 install -r requirements.txt
 pip3 install -r requirements_versions.txt
 cd extensions/sd_dreambooth_extension/
 pip3 install -r requirements.txt
-pip3 install torch==1.13.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
-pip3 uninstall xformers
-pip3 install https://huggingface.co/MonsterMMORPG/SECourses/resolve/main/xformers-0.0.19-cp310-cp310-manylinux2014_x86_64.whl
-
-echo "Compiling and installing bitsandbytes for CUDA 12.1"
-rm -rf /home/ubuntu/stable-diffusion-webui/venv/lib/python3.10/site-packages/bitsandbytes
-cd /home/ubuntu
-git clone https://github.com/TimDettmers/bitsandbytes.git
-cd bitsandbytes
-cp -R /usr/local/cuda-12.1/targets/x86_64-linux/include/* /home/ubuntu/bitsandbytes/include
-sudo ln -s /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.12 /usr/local/cuda-12.1/targets/x86_64-linux/lib/libcusparse.so.11
-export PATH="/usr/local/cuda-12.1/bin:/usr/local/cuda-12.1/nvvm/bin:$PATH"
-LD_LIBRARY_PATH=/usr/local/cuda-12.1/targets/x86_64-linux/lib CUDA_VERSION=121 make cuda12x
-python setup.py install
-
-echo "Verifying bitsandbytes module installation"
-export LD_LIBRARY_PATH=/usr/local/cuda-12.1/targets/x86_64-linux/lib
-python -m bitsandbytes
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip3 install xformers
 
 # Reboot for the Nvidia GPU to be used
 sudo reboot
