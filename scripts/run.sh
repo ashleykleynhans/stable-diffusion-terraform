@@ -6,9 +6,12 @@ export LD_LIBRARY_PATH=/usr/local/cuda-12.1/targets/x86_64-linux/lib
 export PYTHONUNBUFFERED=true
 nohup python launch.py \
   --listen \
+  --skip-python-version-check \
   --enable-insecure-extension-access \
   --xformers \
   --api \
-  --ckpt-dir /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion > /home/ubuntu/log.txt&
+  --skip-version-check \
+  --skip-install \
+  --ckpt-dir /home/ubuntu/stable-diffusion-webui/models/Stable-diffusion > /home/ubuntu/log.txt 2>&1 &
 cd
 tail -f log.txt
