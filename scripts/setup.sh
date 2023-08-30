@@ -6,6 +6,7 @@ DREAMBOOTH_TAG="1.0.14"
 
 echo "Install dependencies"
 sudo apt update
+sudo apt -y upgrade
 sudo apt -y install jq \
         build-essential \
         software-properties-common \
@@ -89,6 +90,7 @@ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt update
 sudo apt -y install cuda=11.8.0-1
+sudo apt-mark hold cuda
 rm cuda-keyring_1.1-1_all.deb
 
 echo "Check GPU"
@@ -101,7 +103,7 @@ pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://dow
 echo "Installing xformers"
 pip3 install --no-cache-dir xformers
 
-echo "Installing dependencies for the WebUI"
+echo "Installing dependencies for the AUTOMATIC1111 WebUI"
 cd ${WORKSPACE}/stable-diffusion-webui
 python3 -m venv --system-site-packages venv
 source venv/bin/activate
@@ -128,6 +130,11 @@ wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p
 wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart.pth
 wget https://huggingface.co/ioclab/ioc-controlnet/resolve/main/models/control_v1p_sd15_brightness.safetensors
 wget https://huggingface.co/lllyasviel/ControlNet-v1-1/resolve/main/control_v11f1e_sd15_tile.pth
+
+echo "Adding configuration files for AUTOMATIC1111"
+cp ${WORKSPACE}/stable-diffusion-terraform/config/config.json ${WORKSPACE}/stable-diffusion-webui/config.json
+cp ${WORKSPACE}/stable-diffusion-terraform/config/ui-config.json ${WORKSPACE}/stable-diffusion-webui/ui-config.json
+cp ${WORKSPACE}/stable-diffusion-terraform/config/webui-user.sh ${WORKSPACE}/stable-diffusion-webui/webui-user.sh
 
 # Reboot for the Nvidia GPU to be used
 sudo reboot
