@@ -1,12 +1,13 @@
-# Create an AWS EC2 GPU Spot Instance to Run Stable Diffusion WebUI and DreamBooth on Ubuntu 22.04 LTS using Terraform
+# Create an AWS EC2 GPU Spot Instance to Run Stable Diffusion WebUI as well as ControlNet and DreamBooth extensions on Ubuntu 22.04 LTS using Terraform
 
 ## Overview
 
 Install the Stable Diffusion [WebUI by AUTOMATIC1111](
-https://github.com/AUTOMATIC1111/stable-diffusion-webui)
-and [Dreambooth Extension](
+https://github.com/AUTOMATIC1111/stable-diffusion-webui),
+[ControlNet](https://github.com/Mikubill/sd-webui-controlnet),
+and [Dreambooth](
 https://github.com/d8ahazard/sd_dreambooth_extension)
-on Ubuntu 22.04 LTS Linux using an AWS EC2 GPU spot
+extensions on Ubuntu 22.04 LTS Linux using an AWS EC2 GPU spot
 instance for the fraction of the cost of an on-demand instance.
 
 A Python script is provided to assist you with determining
